@@ -1,15 +1,15 @@
-- name: Cancer Cell
-  rss: https://www.cell.com/cancer-cell/inpress.rss
-- name: Nature Cancer
-  rss: https://www.nature.com/natcancer/inpress.rss
-- name: Trends in Cancer
-  rss: https://www.cell.com/trends/cancer/inpress.rss
-- name: Cell Chemical Biology
-  rss: https://www.cell.com/cell-chemical-biology/inpress.rss
+- name: Cell
+  rss: https://www.cell.com/cell/inpress.rss
+- name: Cell Developmental Cell
+  rss: https://www.cell.com/developmental-cell/inpress.rss
+- name: Cell Molecular Cell
+  rss: https://www.cell.com/molecular-cell/inpress.rss
 - name: Cell Genomics
   rss: https://www.cell.com/cell-genomics/inpress.rss
-- name: Cell Metabolism
-  rss: https://www.cell.com/cell-metabolism/inpress.rss
+- name: Cell Stem Cell
+  rss: https://www.cell.com/cell-stem-cell/inpress.rss
+- name: Cell Systems
+  rss: https://www.cell.com/cell-systems/inpress.rss
 - name: Cell Reports
   rss: https://www.cell.com/cell-reports/inpress.rss
 - name: Trends in Molecular Medicine (Cell)
@@ -20,5 +20,7 @@
   rss: https://www.cell.com/trends/immunology/inpress.rss
 - name: Trends in Cell Biology (Cell)
   rss: https://www.cell.com/trends/cell-biology/inpress.rss
-- name: Trends in Chemistry (Cell)
-  rss: https://www.cell.com/trends/chemistry/inpress.rss
+- name: Nature
+  rss: https://www.nature.com/nature.rss
+- name: Nature Communications
+  rss: https://www.nature.com/ncomms/inpress.rss
