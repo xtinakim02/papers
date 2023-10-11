@@ -1,0 +1,22 @@
+name: "Clone config and curate"
+on:
+  schedule:
+    - cron: "25 3 * * *"
+  workflow_dispatch:
+jobs:
+  clone-config-and-curate:
+    runs-on: ubuntu-latest
+    container:
+      image: mattfeng/curator:1.0.0
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Clone repo
+        run: git clone https://${{ github.repository_owner }}:${{ secrets.REPO_ACCESS_TOKEN }}@github.com/${{ github.repository }} /repo
+      - name: Curate
+        run: cd /repo && /bin/bash /app/run.sh
+      - name: Commit and push
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "Github Actions"
+          cd /repo && git add . && git commit -m 'new articles' && git push

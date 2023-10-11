@@ -1,0 +1,96 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/axios@1.5.1/dist/axios.js"></script>
+
+<head>
+  <link href="./css/output.css" rel="stylesheet" />
+</head>
+
+<div id="app" class="sm:container mx-auto px-4 py-8">
+  <div class="max-w-[80ch] mx-auto">
+    <h1 class="text-4xl font-bold">Curated articles</h1>
+    <div v-for="run in curated.slice().reverse()" class="my-4">
+      <h2 class="text-2xl font-bold border-b-2 border-slate-600">
+        {{ generateDateHeading(run.time_of_run) }}
+      </h2>
+      <div v-for="(articles, journal) in run.articles" class="py-2">
+        <h3 class="text-2xl">{{ journal }}</h3>
+        <div
+          v-if="articles.length > 0"
+          v-for="article in articles"
+          :class="{ 'bg-sky-100': article.recommendation === 'yes' }"
+          class="py-2 px-2 ml-4"
+        >
+          <a :href="article.link" target="_blank" rel="noreferrer">
+            <h4 class="text-sky-900 underline font-bold w-[90%]">
+              {{ article.title }}
+            </h4>
+          </a>
+          <p class="text-gray-700 text-justify">
+            {{ article.description.replace(/(<([^>]+)>).*(<([^>]+)>)/ig, "") }}
+          </p>
+        </div>
+        <div v-else class="py-2 px-2 ml-4">
+          <p>No new articles</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const { createApp } = Vue;
+
+  createApp({
+    data() {
+      return {
+        message: "Hello Vue!",
+        curated: undefined,
+        onlyShowRecommended: false,
+      };
+    },
+    methods: {
+      generateDateHeading(isoString) {
+        const date = new Date(isoString);
+
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        const month = months[date.getMonth()];
+        const day = date.getDate();
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+
+        return `${month} ${day}, ${year} (${hours}:${minutes})`;
+      },
+    },
+    async beforeMount() {
+      try {
+        const response = await axios.get("./curated.json", {
+          responseType: "text",
+        });
+        console.log(response);
+
+        const curated = [];
+        for (const line of response.data.trim().split("\n")) {
+          curated.push(JSON.parse(line));
+        }
+        this.curated = curated;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  }).mount("#app");
+</script>
